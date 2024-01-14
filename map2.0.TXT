@@ -1,0 +1,94 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <title>Map with Marker</title>
+  </head>
+  <body>
+
+    <div id="map" style="height: 400px; width: 950px; border: 2px solid #ccc; border-radius: 50px; padding: 10px; margin: 20px;"></div>
+    <input type="text" id="addressInput" placeholder="Enter your address">
+    <button onclick="searchAndGenerateMarker()">Search and Generate Marker</button>
+    <button onclick="generateCurrentLocation()">Generate Current Location Marker</button>
+    <button onclick="setWaypoints()">Set Waypoints</button>
+
+    <script>
+      var map = L.map('map').setView([34.4140, -119.8489], 13);
+      var markerGroup = L.layerGroup().addTo(map);
+      var geocoder = L.Control.Geocoder.nominatim();
+      
+      // Use a service like OpenStreetMap for tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Function to generate markers on the map
+      function generateMarker(location, popupText) {
+        map.setView(location, 15);
+        var marker = L.marker(location).addTo(markerGroup).bindPopup(popupText).openPopup();
+
+        // Allow marker deletion on right-click
+        marker.on('contextmenu', function () {
+          map.removeLayer(marker);
+        });
+
+        return marker;
+      }
+
+      // Function to search and generate marker based on address input
+      function searchAndGenerateMarker() {
+        var address = document.getElementById('addressInput').value;
+        geocoder.geocode(address, function (results) {
+          if (results && results.length > 0) {
+            var location = results[0].center;
+            generateMarker(location, "Your Location");
+          } else {
+            console.error("Unable to geocode address");
+          }
+        });
+      }
+
+      // Function to generate marker at the user's current location
+      function generateCurrentLocation() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var latlng = [position.coords.latitude, position.coords.longitude];
+          generateMarker(latlng, "Your Current Location");
+        });
+      }
+
+      // Function to initialize routing control
+      function initRoutingControl() {
+        L.Routing.control({
+          waypoints: [
+            L.latLng(34.4140, -119.8489),  // Starting point (update with actual coordinates)
+            L.latLng(34.4240, -119.8589)   // Destination point (update with actual coordinates)
+          ],
+          routeWhileDragging: true
+        }).addTo(map);
+      }
+
+      // Function to set waypoints on the map
+      function setWaypoints() {
+        // Remove existing routing control if any
+        map.eachLayer(function (layer) {
+          if (layer instanceof L.Routing.Control) {
+            map.removeControl(layer);
+          }
+        });
+
+        // Enable map click events to set waypoints
+        map.on('click', function (e) {
+          initRoutingControl(); // Initialize the routing control with new waypoints
+          map.off('click');  // Disable map click events after setting waypoints
+        });
+      }
+    </script>
+  </body>
+  </html>
+</div>

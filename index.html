@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GotchuGaucho</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <title>Map with Marker and Routing</title>
+
+</head>
+
+<body>
+    <header>
+        <h1>GotchuGaucho</h1>
+        <nav>
+            <a href="#" onclick="showPage('home')">Home</a>
+            <a href="#" onclick="showPage('post-party')">Host a Party</a>
+            <a href="#" onclick="showPage('party-feed')">Recent Parties</a>
+            <a href="#" onclick="showPage('party-locator')">Locate your Party</a>
+            <a href="#" onclick="showPage('about')">About</a>
+
+        </nav>
+    </header>
+
+    <main>
+<section id="home" class="page">
+    <h2>Welcome to GotchuGaucho</h2>
+    <p>Your one-stop destination for UCSB's vibrant party scene. Connect, party, and enjoy!</p>
+
+    <div class="home-blocks">
+        <a href="#" onclick="showPage('party-feed')" class="home-block find-parties">
+            <h3>Find Parties</h3>
+        </a>
+        <a href="#" onclick="showPage('post-party')" class="home-block host-parties">
+            <h3>Host Parties</h3>
+        </a>
+    </div>
+</section>
+
+
+        <section id="post-party" class="page" style="display:none;">
+            <h2>Post a Party</h2>
+    <form id="postForm">
+        <input type="text" id="partyTitle" placeholder="Party Title" required>
+        <input type="text" id="partyDate" placeholder="Date (MM/DD/YYYY)" required>
+        <input type="text" id="partyTime" placeholder="Time (e.g., 9 PM)" required>
+        <input type="text" id="partyVenue" placeholder="Venue" required>
+        <textarea id="partyDescription" placeholder="Party Description" required></textarea>
+        <input type="file" id="partyImage" accept="image/*">
+        <button type="submit">Post</button>
+    </form>
+</section>
+
+
+<section id="party-feed" class="page" style="display:none;">
+    <h2>Recent Parties</h2>
+    <div id="partyPostsContainer">
+        <!-- Dynamic party posts will be appended here -->
+    </div>
+ </section>
+
+<section id="party-locator" class="page" style="display:none;">
+    <h2>Party Locator</h2>
+    <p>Locate your party with our easy to use tool below: </p>
+
+    <div id="map-container">
+        <div id="map"></div>
+        <input type="text" id="addressInput" placeholder="Enter your address">
+        <button onclick="searchAndGenerateMarker()">Search and Generate Marker</button>
+        <button onclick="generateCurrentLocation()">Generate Current Location Marker</button>
+    </div>
+
+</section>
+
+<section id="about" class="page" style="display:none;">
+    <h2>About GotchuGaucho</h2>
+    <p>Learn more about GotchuGaucho, the platform that brings UCSB students together for unforgettable party experiences.</p>
+   
+</section>
+
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GotchuGaucho. Picture Credit - ivstreets. Connect. Party. Enjoy.</p>
+    </footer>
+
+    <script src="script.js"></script>
+<script>
+    var map = L.map('map').setView([34.4140, -119.8489], 13);
+    var markerGroup = L.layerGroup().addTo(map);
+    var geocoder = L.Control.Geocoder.nominatim();
+    var routingControl;
+    var currentLocation;
+    var destination;
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function generateMarker(location, popupText, isDestination = false) {
+        map.setView(location, 15);
+        var marker = L.marker(location).addTo(markerGroup).bindPopup(popupText).openPopup();
+        if (isDestination) {
+            destination = location;
+        }
+        generateRoute();
+    }
+
+    function searchAndGenerateMarker() {
+        var address = document.getElementById('addressInput').value;
+        geocoder.geocode(address, function (results) {
+            if (results && results.length > 0) {
+                var location = results[0].center;
+                generateMarker(location, "Destination", true);
+            } else {
+                console.error("Unable to geocode address");
+            }
+        });
+    }
+
+    function generateCurrentLocation() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            currentLocation = [position.coords.latitude, position.coords.longitude];
+            generateMarker(currentLocation, "Your Current Location");
+        });
+    }
+
+function generateRoute() {
+    if (currentLocation && destination) {
+        // Remove existing routing control if any
+        if (routingControl) {
+            map.removeControl(routingControl);
+        }
+
+        // Add new routing control
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(currentLocation),
+                L.latLng(destination)
+            ],
+            routeWhileDragging: true,
+            geocoder: L.Control.Geocoder.nominatim(),
+            showAlternatives: true,
+            altLineOptions: {
+                styles: [
+                    {color: 'black', opacity: 0.15, weight: 9},
+                    {color: 'black', opacity: 0.8, weight: 6},
+                    {color: 'blue', opacity: 0.5, weight: 2}
+                ]
+            }
+        }).addTo(map);
+
+        // Optional: Add event listeners for routing events
+        routingControl.on('routesfound', function(e) {
+            var routes = e.routes;
+            // Log or process routes
+        });
+
+        routingControl.on('routingerror', function(e) {
+            console.error('Routing error:', e.error);
+        });
+    }
+}
+
+    
+
+</script>
+  </body>
+  </html>
+
+</div>
+
+

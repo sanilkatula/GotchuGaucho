@@ -1,0 +1,339 @@
+html, body {
+    overflow: auto;
+}
+
+@keyframes backgroundSlide {
+    0% { background-image: url('Screenshot 2024-01-13 at 2.29.42 PM.png'); }
+    20% { background-image: url('Screenshot 2024-01-13 at 2.29.14 PM.png'); }
+    40% { background-image: url('Screenshot 2024-01-13 at 2.28.40 PM.png'); }
+    60% { background-image: url('Screenshot 2024-01-13 at 2.28.24 PM.png'); }
+    80% { background-image: url('Screenshot 2024-01-13 at 2.28.05 PM.png'); }
+    100% { background-image: url('Screenshot 2024-01-13 at 2.29.42 PM.png'); } /* Loop back to the first image */
+}
+
+
+
+body {
+    animation: backgroundSlide 10s infinite;
+    background-size: cover;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #E6E8E6; /* Mist */
+}
+
+header {
+    background-color: #002F6C; /* Navy */
+    color: #FFC72C; /* Gold */
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav {
+    background-color: #FFC72C; /* Gold */
+    padding: 10px 0;
+}
+
+nav a {
+    color: #005B84; /* Aqua */
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+nav a:hover {
+    color: #007C59; /* Sea Green */
+}
+
+
+
+main {
+    padding: 20px;
+    color: white; /* Darker text for readability */
+}
+
+h1, h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.home-blocks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    margin-top: 20px;
+}
+
+.home-block {
+    width: 300px; /* Adjust width for square shape */
+    height: 300px; /* Adjust height for square shape */
+    padding: 20px;
+    margin: 10px; /* Adjust spacing between blocks */
+    text-align: center;
+    border-radius: 12px;
+    background-size: cover;
+    color: gold;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex; /* To center content vertically and horizontally */
+    align-items: center;
+    justify-content: center;
+}
+
+.home-block h3 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A more modern font */
+    font-size: 2.5em; /* Increase font size */
+    color: gold; /* Gold color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    font-weight: bold; /* Make the text bold */
+    text-transform: uppercase; /* Capitalize all letters */
+    margin: 0; /* Remove default margin */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+
+
+
+.home-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text readability */
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.home-block:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.home-block:hover::before {
+    background: rgba(0, 0, 0, 0.2); /* Lighter overlay on hover */
+}
+
+
+#post-party {
+    background-color: #BAA892; /* Sandstone */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#postForm input, #postForm textarea, #postForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+#postForm button {
+    background-color: #002F6C; /* Navy */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#postForm button:hover {
+    background-color: #FFC72C; /* Gold */
+}
+
+#party-feed {
+    background-color: #ffffff; /* White */
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+#party-feed {
+    background-color: #BAA892; /* Sandstone */
+    padding: 10px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.party-post {
+    background-color: white; /* Sandstone */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.party-post img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.party-post-content {
+    padding: 15px;
+}
+
+.party-post h3 {
+    margin-top: 0;
+}
+
+.party-post small {
+    color: #666;
+}
+
+.party-post-actions {
+    padding: 0 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like-button, .comment-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    #party-feed {
+        grid-template-columns: 1fr; /* Adjust grid layout for smaller screens */
+    }
+}
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+#partyPostsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.party-post {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.party-post img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.party-post-content {
+    padding: 15px;
+    color: black;
+}
+
+.party-post h3 {
+    margin-top: 0;
+}
+
+.party-post small {
+    color: #666;
+}
+
+.party-post-actions {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-button {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+.action-button.active {
+    background-color: #4CAF50; /* Green background for active state */
+    color: white;
+}
+
+/* You can customize colors for each type of button if needed */
+.action-button.active[data-action="like"] {
+    background-color: #f44336; /* Red for 'Like' */
+}
+
+.action-button.active[data-action="going"] {
+    background-color: #4CAF50; /* Green for 'Going' */
+}
+
+.action-button.active[data-action="not-going"] {
+    background-color: #ff9800; /* Orange for 'Not Going' */
+}
+
+#map-container {
+    position: fixed;
+    top: 300px; /* Adjust as necessary */
+    right: 800px; /* Adjust as necessary */
+    width: 950px; /* Adjust as necessary */
+    height: 400px; /* Adjust as necessary */
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    padding: 10px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    border-radius: 50px; /* Optional, for rounded corners */
+}
+
+@media (max-width: 768px) {
+    #map-container {
+        width: 100%; /* Full width on smaller screens */
+        height: 200px; /* Smaller height on smaller screens */
+        top: 0; /* Align to the top on smaller screens */
+        right: 0; /* Align to the right on smaller screens */
+        border-radius: 0; /* Optional: remove rounded corners on smaller screens */
+    }
+}
+
+
+.leaflet-routing-container {
+    color: black; /* Change text color to black */
+}
+
+
+footer {
+    background-color: #002F6C; /* Navy */
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+} 

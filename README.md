@@ -1,7 +1,7 @@
-# GotchuGaucho
+# PARTYBOOK
 
 ## Overview
-GotchuGaucho is a vibrant, user-friendly platform designed to unify the Gaucho community through party culture at UCSB. Whether you're looking to host a memorable event or seeking the next exciting party to attend, GotchuGaucho is your one-stop destination for all party-related activities in the UCSB area.
+PARTYBOOK is a vibrant, user-friendly platform designed to unify the Gaucho community through party culture at UCSB. Whether you're looking to host a memorable event or seeking the next exciting party to attend, PARTYBOOK is your one-stop destination for all party-related activities in the UCSB area.
 
 ## Features
 
@@ -11,11 +11,11 @@ GotchuGaucho is a vibrant, user-friendly platform designed to unify the Gaucho c
 - **User Profiles**: Customizable profiles for hosts and attendees to enhance social interaction.
 - **Ratings & Reviews**: Share and read experiences to ensure quality and safety.
 - **Real-time Chat**: Communicate directly with hosts and other attendees.
-- **Mobile Responsive Design**: Access GotchuGaucho anytime, anywhere, on any device.
+- **Mobile Responsive Design**: Access PARTYBOOK anytime, anywhere, on any device.
 
 ## Getting Started
 
-To get started with GotchuGaucho, follow these steps:
+To get started with PARTYBOOK, follow these steps:
 
 1. **Clone the Repository**:
 2. **Navigate to the Project Directory**:
@@ -24,11 +24,11 @@ To get started with GotchuGaucho, follow these steps:
 
 ## How to Use
 
-After launching GotchuGaucho, you can start exploring parties, or create your own party listing. Navigate through the interactive map to find parties near you.
+After launching PARTYBOOK, you can start exploring parties, or create your own party listing. Navigate through the interactive map to find parties near you.
 
 ## Contributing
 
-We welcome contributions to make GotchuGaucho even better. If you have suggestions or want to contribute, please follow these steps:
+We welcome contributions to make PARTYBOOK even better. If you have suggestions or want to contribute, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
